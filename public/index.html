@@ -1,0 +1,75 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Go File Server</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        header {
+            background-color: rgb(189, 109, 109);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            background: #c5c5c5;
+            height: 100%;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(189, 109, 109);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            console.log('DOM fully loaded and parsed');
+            const goToVideosButton = document.getElementById('goToVideosButton');
+
+            if (goToVideosButton) {
+                goToVideosButton.addEventListener('click', () => {
+                    window.location.href = '/videos';
+                });
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            console.log('DOM cleanup beforeunload');
+            const goToVideosButton = document.getElementById('goToVideosButton');
+
+            if (goToVideosButton) {
+                goToVideosButton.removeEventListener('click', () => {
+                    window.location.href = '/videos';
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Go Video Server</h1>
+    </header>
+    <main>
+        <section id="video-list">
+            <a id="goToVideosButton">GO TO Videos</a>
+            <h2>Video List</h2>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Go Video Server</p>
+    </footer>
+</body>
+
+</html>
