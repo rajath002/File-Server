@@ -23,11 +23,12 @@ func main() {
 		fmt.Println("Unable to get WiFi IP address:", err)
 		return
 	}
-	fmt.Printf("Server started at http://%s:8080/videos\n", address)
 
 	// Define the address and port for the server to run on
 	port := 8080
-	fmt.Printf("Server started at http://localhost:%d\n", port)
+	fmt.Printf("You can access the server at \nhttp://%s:8080\n", address)
+	fmt.Println("OR")
+	fmt.Printf("http://localhost:%d\n", port)
 
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 	if err != nil {
