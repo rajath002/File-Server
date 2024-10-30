@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Server</title>
+</head>
+
+<body>
+    <h1>Video Files</h1>
+    {{range .VideoFiles}}
+    <li>
+        {{.}}
+        <a href="/videos/{{.}}" download>Download</a>
+    </li>
+    {{end}}
+    {{if not .VideoFiles}}
+        <p>No files found</p>
+    {{end}}
+</body>
+
+</html>
