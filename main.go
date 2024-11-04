@@ -16,7 +16,15 @@ func main() {
 	// Serve the files in the "videos" folder at the "/videos" route
 	http.Handle("/videos/", http.StripPrefix("/videos/", fs))
 
+	// Define the route for the video stream
+	http.HandleFunc("/video-stream/", handlers.StreamVideo)
+
 	http.HandleFunc("/", handlers.ReadFilesHanderFromRoot)
+
+	// URL to serve the video player page
+	http.HandleFunc("/video-player/", handlers.VideoPlayerPage)
+
+	http.HandleFunc("/about", handlers.AboutHandlerPage)
 
 	address, err := utils.GetWiFiIPv4Address()
 	if err != nil {

@@ -97,6 +97,9 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/about">About</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -111,7 +114,10 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
                 {{range .VideoFiles}}
                 <li data-fileName="{{.}}" class="list-group-item d-flex justify-content-between align-items-center">
                     <span>{{.}}</span>
-                    <a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
+					<div>
+						<a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
+						<a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
+					</div>
                 </li>
                 {{end}}
             </ul>

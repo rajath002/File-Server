@@ -5,3 +5,12 @@ type TemplateData struct {
 	StringMap  map[string]string
 	VideoFiles []string
 }
+
+type Video struct {
+	Name string
+	Path string
+}
+
+type About struct {
+	IPAddress string
+}
