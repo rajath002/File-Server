@@ -85,15 +85,26 @@ func VideoPlayerPage(res http.ResponseWriter, req *http.Request) {
 				video {
 					border-radius: 20px;
 				}
+				.video-title {
+					color: #0a58ca;
+					border-radius: 10px;
+					padding: 10px 20px; /* Add some padding for spacing */
+					background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+					backdrop-filter: blur(10px); /* Adjust the blur intensity */
+					border-radius: 8px; /* Optional rounded corners */
+					box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+				}
 			</style>
 			</head>
 				<body class="bg-light main-bg d-flex justify-content-center align-items-center vh-100">
 					<div class="container text-center">
-						<h1 class="display-4 mb-4" style="color: #f8f9fa; mix-blend-mode: difference;">Go Video Streaming</h1>
+						<h1 class="display-6 mb-4 video-title">
+							Go Video Streaming
+						</h1>
 						
 						<div class="">
 							<div class="ratio mb-3" style="--bs-aspect-ratio: 45%;">
-								<video controls>
+								<video controls playsinline>
 									<source src="{{.Path}}" type="video/mp4" >
 									Your browser does not support the video tag.
 								</video>
