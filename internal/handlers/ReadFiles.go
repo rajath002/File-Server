@@ -63,7 +63,7 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	// Create a slice to hold the file names
 	var videoFiles []string
 	for _, file := range files {
-		if !file.IsDir() && filepath.Ext(file.Name()) == ".mp4" {
+		if !file.IsDir() && (filepath.Ext(file.Name()) == ".mp4" || filepath.Ext(file.Name()) == ".MP4") {
 			videoFiles = append(videoFiles, file.Name())
 		}
 	}
