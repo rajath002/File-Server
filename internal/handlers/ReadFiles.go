@@ -48,6 +48,10 @@ func ReadFilesHander(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func add(x, y int) int {
+	return x + y
+}
+
 /*
 ReadFilesHanderFromRoot reads the video files from the root directory,
 and displays them on the home page using an inline HTML template
@@ -111,9 +115,11 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
         <div class="container py-5">
             <h1 class="display-4 text-center text-primary mb-5">Video List</h1>
             <ul class="list-group">
-                {{range .VideoFiles}}
+				{{ $index := 0 }}
+                {{ range .VideoFiles }}
+				{{ $index = add $index 1}}
                 <li data-fileName="{{.}}" class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>{{.}}</span>
+                    <span><span class="fw-bold text-primary fs-5">{{$index}}.</span> &nbsp; {{.}}</span>
 					<div>
 						<a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
 						<a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
@@ -156,8 +162,10 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 </body>
 </html>`
 
-	// Parse and execute the template
-	t, err := template.New("videoList").Parse(tpl)
+	// Parse the template with the custom function "add"
+	t, err := template.New("videoList").Funcs(
+		template.FuncMap{"add": add},
+	).Parse(tpl)
 	if err != nil {
 		fmt.Println("Unable to parse template:", err)
 		http.Error(res, "Unable to read video directory", http.StatusInternalServerError)
