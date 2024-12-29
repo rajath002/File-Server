@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	inlinetmpls "github.com/rajath002/File-Server/internal/handlers/inline-tmpls"
@@ -68,7 +69,7 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	// Create a slice to hold the file names
 	var videoFiles []string
 	for _, file := range files {
-		if !file.IsDir() && (filepath.Ext(file.Name()) == ".mp4" || filepath.Ext(file.Name()) == ".MP4") {
+		if !file.IsDir() && (strings.ToUpper(filepath.Ext(file.Name())) == ".MP4" || strings.ToUpper(filepath.Ext(file.Name())) == ".MKV") {
 			videoFiles = append(videoFiles, file.Name())
 		}
 	}
