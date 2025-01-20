@@ -58,7 +58,9 @@ const ReadFilesTmpl = `
 						&nbsp; <span class="video-list-title">{{.}}</span>
 						</span>
 					<div>
-						<a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
+                        {{ if not (hasImageExtension .) }}
+						    <a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
+                        {{ end }}
 						<a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
 					</div>
                 </li>
