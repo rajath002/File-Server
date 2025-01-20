@@ -54,6 +54,23 @@ func add(x, y int) int {
 	return x + y
 }
 
+// check if the string ends with any of the supported extensions
+func hasSupportedExtension(fileName string, _supportedExtensions []string) bool {
+	for _, extension := range _supportedExtensions {
+		if strings.HasSuffix(strings.ToUpper(fileName), extension) {
+			return true
+		}
+	}
+	return false
+}
+
+// check if the string ends with any of the image extensions
+func hasImageExtension(fileName string) bool {
+	_supportedExtensions := []string{".JPG", ".JPEG", ".PNG"}
+	res := hasSupportedExtension(fileName, _supportedExtensions)
+	return res
+}
+
 /*
 ReadFilesHanderFromRoot reads the video files from the root directory,
 and displays them on the home page using an inline HTML template
@@ -68,9 +85,16 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 
 	// Create a slice to hold the file names
 	var videoFiles []string
+	var supportedExtensions = []string{".MP4", ".MKV", ".JPG", ".JPEG", ".PNG"}
 	for _, file := range files {
-		if !file.IsDir() && (strings.ToUpper(filepath.Ext(file.Name())) == ".MP4" || strings.ToUpper(filepath.Ext(file.Name())) == ".MKV") {
-			videoFiles = append(videoFiles, file.Name())
+		if !file.IsDir() {
+			ext := strings.ToUpper(filepath.Ext(file.Name()))
+			for _, extension := range supportedExtensions {
+				if ext == extension {
+					videoFiles = append(videoFiles, file.Name())
+					break
+				}
+			}
 		}
 	}
 
@@ -81,7 +105,10 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	// Parse the template with the custom function "add",
 	// `inlinetmpls.ReadFilesTmpl` contains the HTML template
 	t, err := template.New("videoList").Funcs(
-		template.FuncMap{"add": add},
+		template.FuncMap{
+			"add":               add,
+			"hasImageExtension": hasImageExtension,
+		},
 	).Parse(inlinetmpls.ReadFilesTmpl)
 	if err != nil {
 		fmt.Println("Unable to parse template:", err)
