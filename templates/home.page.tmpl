@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video List</title>
+    <title>Media List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -12,7 +12,7 @@
     <header class="bg-primary text-white py-3">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">Video Server</a>
+                <a class="navbar-brand" href="#">Media Server</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -20,6 +20,9 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/about">About</a>
                         </li>
                     </ul>
                 </div>
@@ -30,11 +33,14 @@
     <!-- Main Content -->
     <main class="flex-grow-1">
         <div class="container py-5">
-            <h1 class="display-4 text-center text-primary mb-5">Video List</h1>
+            <h1 class="display-4 text-center text-primary mb-5">Media List</h1>
             <ul class="list-group">
                 {{range .VideoFiles}}
                 <li data-fileName="{{.}}" class="list-group-item d-flex justify-content-between align-items-center">
                     <span>{{.}}</span>
+                    {{ if or (eq (filepath.Ext .) ".mp4") (eq (filepath.Ext .) ".mkv") }}
+                    <a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
+                    {{ end }}
                     <a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
                 </li>
                 {{end}}
@@ -45,7 +51,7 @@
     <!-- Footer -->
     <footer class="bg-dark text-white py-3">
         <div class="container d-flex justify-content-center">
-            <span>&copy; 2024 Video Server. All Rights Reserved.</span>
+            <span>&copy; 2024 Media Server. All Rights Reserved.</span>
         </div>
     </footer>
 

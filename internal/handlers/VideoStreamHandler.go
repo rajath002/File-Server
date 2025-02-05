@@ -13,25 +13,25 @@ import (
 )
 
 func StreamVideo(w http.ResponseWriter, r *http.Request) {
-	// get the video file path from the request URL
-	videoName := r.URL.Path[len("/video-stream/"):]
+	// get the media file path from the request URL
+	mediaName := r.URL.Path[len("/video-stream/"):]
 
-	fmt.Println("Video file path:", videoName)
+	fmt.Println("Media file path:", mediaName)
 
-	// Open the video file
-	videoPath := fmt.Sprintf("./%s", videoName) // Path to your video file
+	// Open the media file
+	mediaPath := fmt.Sprintf("./%s", mediaName) // Path to your media file
 
-	// check if the video file exists
-	if _, err := os.Stat(videoPath); os.IsNotExist(err) {
-		fmt.Println("Video file not found:", videoPath)
-		http.Error(w, "Video not found.", http.StatusNotFound)
+	// check if the media file exists
+	if _, err := os.Stat(mediaPath); os.IsNotExist(err) {
+		fmt.Println("Media file not found:", mediaPath)
+		http.Error(w, "Media not found.", http.StatusNotFound)
 		return
 	}
 
-	file, err := os.Open(videoPath)
+	file, err := os.Open(mediaPath)
 	if err != nil {
-		fmt.Println("Error opening video file:", err)
-		http.Error(w, "Video not found.", http.StatusNotFound)
+		fmt.Println("Error opening media file:", err)
+		http.Error(w, "Media not found.", http.StatusNotFound)
 		return
 	}
 	defer file.Close()
@@ -40,13 +40,12 @@ func StreamVideo(w http.ResponseWriter, r *http.Request) {
 	fileStat, err := file.Stat()
 	if err != nil {
 		fmt.Println("Error getting file information:", err)
-		http.Error(w, "Could not obtain video information.", http.StatusInternalServerError)
+		http.Error(w, "Could not obtain media information.", http.StatusInternalServerError)
 		return
 	}
 
-	// fmt.Println("Streaming video file:", videoPath)
-	// Serve video content with range support
-	http.ServeContent(w, r, filepath.Base(videoPath), fileStat.ModTime(), file)
+	// Serve media content with range support
+	http.ServeContent(w, r, filepath.Base(mediaPath), fileStat.ModTime(), file)
 }
 
 // video player page

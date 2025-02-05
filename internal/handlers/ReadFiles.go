@@ -25,15 +25,15 @@ func ReadFilesHander(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Create a slice to hold the file names
-	var videoFiles []string
+	var mediaFiles []string
 	for _, file := range files {
-		if !file.IsDir() && filepath.Ext(file.Name()) == ".mp4" {
-			videoFiles = append(videoFiles, file.Name())
+		if !file.IsDir() && (filepath.Ext(file.Name()) == ".mp4" || filepath.Ext(file.Name()) == ".mkv" || filepath.Ext(file.Name()) == ".jpg" || filepath.Ext(file.Name()) == ".jpeg" || filepath.Ext(file.Name()) == ".png") {
+			mediaFiles = append(mediaFiles, file.Name())
 		}
 	}
 
 	td := models.TemplateData{
-		VideoFiles: videoFiles,
+		VideoFiles: mediaFiles,
 	}
 
 	// Parse the template file
@@ -67,15 +67,15 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Create a slice to hold the file names
-	var videoFiles []string
+	var mediaFiles []string
 	for _, file := range files {
-		if !file.IsDir() && (strings.ToUpper(filepath.Ext(file.Name())) == ".MP4" || strings.ToUpper(filepath.Ext(file.Name())) == ".MKV") {
-			videoFiles = append(videoFiles, file.Name())
+		if !file.IsDir() && (strings.ToUpper(filepath.Ext(file.Name())) == ".MP4" || strings.ToUpper(filepath.Ext(file.Name())) == ".MKV" || strings.ToUpper(filepath.Ext(file.Name())) == ".JPG" || strings.ToUpper(filepath.Ext(file.Name())) == ".JPEG" || strings.ToUpper(filepath.Ext(file.Name())) == ".PNG") {
+			mediaFiles = append(mediaFiles, file.Name())
 		}
 	}
 
 	td := models.TemplateData{
-		VideoFiles: videoFiles,
+		VideoFiles: mediaFiles,
 	}
 
 	// Parse the template with the custom function "add",

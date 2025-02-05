@@ -6,13 +6,13 @@ const ReadFilesTmpl = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video List</title>
+    <title>Media List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <style>
 	.f-system-ui {
 		font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	}
-	.video-list-title {
+	.media-list-title {
 		font-weight: 100;
 		color: #000000;
 		font-size: 1.3rem;
@@ -26,7 +26,7 @@ const ReadFilesTmpl = `
     <header class="bg-primary text-white py-3">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">Video Server</a>
+                <a class="navbar-brand" href="#">Media Server</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -47,7 +47,7 @@ const ReadFilesTmpl = `
     <!-- Main Content -->
     <main class="flex-grow-1">
         <div class="container py-5">
-            <h1 class="display-4 text-center text-primary mb-5">Video List</h1>
+            <h1 class="display-4 text-center text-primary mb-5">Media List</h1>
             <ul class="list-group">
 				{{ $index := 0 }}
                 {{ range .VideoFiles }}
@@ -55,10 +55,12 @@ const ReadFilesTmpl = `
                 <li data-fileName="{{.}}" class="list-group-item d-flex justify-content-between align-items-center">
                     <span>
 						<span class="fw-bold fs-5">{{$index}}.</span>
-						&nbsp; <span class="video-list-title">{{.}}</span>
+						&nbsp; <span class="media-list-title">{{.}}</span>
 						</span>
 					<div>
+						{{ if or (eq (filepath.Ext .) ".mp4") (eq (filepath.Ext .) ".mkv") }}
 						<a target="_blank" href="/video-player/{{.}}" class="btn btn-outline-primary btn-sm">Play</a>
+						{{ end }}
 						<a href="/videos/{{.}}" download class="btn btn-outline-primary btn-sm">Download</a>
 					</div>
                 </li>
@@ -70,7 +72,7 @@ const ReadFilesTmpl = `
     <!-- Footer -->
     <footer class="bg-dark text-white py-3">
         <div class="container d-flex justify-content-center">
-            <span>&copy; 2024 Video Server. All Rights Reserved.</span>
+            <span>&copy; 2024 Media Server. All Rights Reserved.</span>
         </div>
     </footer>
 
