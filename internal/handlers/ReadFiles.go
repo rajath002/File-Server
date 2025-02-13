@@ -56,6 +56,12 @@ func add(x, y int) int {
 
 // check if the string ends with any of the supported extensions
 func hasSupportedExtension(fileName string, _supportedExtensions []string) bool {
+	if fileName == "" {
+		return false
+	}
+	if strings.HasSuffix(fileName, "/") {
+		return true
+	}
 	for _, extension := range _supportedExtensions {
 		if strings.HasSuffix(strings.ToUpper(fileName), extension) {
 			return true
@@ -87,7 +93,9 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	var videoFiles []string
 	var supportedExtensions = []string{".MP4", ".MKV", ".JPG", ".JPEG", ".PNG"}
 	for _, file := range files {
-		if !file.IsDir() {
+		if file.IsDir() {
+			videoFiles = append(videoFiles, file.Name()+"/")
+		} else {
 			ext := strings.ToUpper(filepath.Ext(file.Name()))
 			for _, extension := range supportedExtensions {
 				if ext == extension {
