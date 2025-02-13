@@ -93,9 +93,7 @@ func ReadFilesHanderFromRoot(res http.ResponseWriter, req *http.Request) {
 	var videoFiles []string
 	var supportedExtensions = []string{".MP4", ".MKV", ".JPG", ".JPEG", ".PNG"}
 	for _, file := range files {
-		if file.IsDir() {
-			videoFiles = append(videoFiles, file.Name()+"/")
-		} else {
+		if !file.IsDir() {
 			ext := strings.ToUpper(filepath.Ext(file.Name()))
 			for _, extension := range supportedExtensions {
 				if ext == extension {
