@@ -56,6 +56,12 @@ func add(x, y int) int {
 
 // check if the string ends with any of the supported extensions
 func hasSupportedExtension(fileName string, _supportedExtensions []string) bool {
+	if fileName == "" {
+		return false
+	}
+	if strings.HasSuffix(fileName, "/") {
+		return true
+	}
 	for _, extension := range _supportedExtensions {
 		if strings.HasSuffix(strings.ToUpper(fileName), extension) {
 			return true
